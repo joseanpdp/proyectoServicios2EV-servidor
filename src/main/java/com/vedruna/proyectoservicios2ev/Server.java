@@ -28,7 +28,7 @@ public class Server implements Runnable {
     public void run() {
         byte[] inputBuffer  = new byte[1024];
         try {
-            while (true) {
+            while (true) { // CAMBIAR POR BANDERA
                 // Preparamos el Datagrama de inserción
                 DatagramPacket inputDatagramPacket = new DatagramPacket(inputBuffer,inputBuffer.length);
                 // Esperamos que el datagrama de recepción se rellene
@@ -45,6 +45,7 @@ public class Server implements Runnable {
                 if (user == null) {
                     user = new User(message, remoteInetAddress, remotePort);
                     users.add(user);
+                    // PETICION DEL NOMBRE DE USUARIO PARA EVITAR CONFUSIONES
                     System.out.println("Se añadió el usuario: " + message);
                     message = "[El servidor te da la bienvenida, " + message + "]";
                     DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes(),
@@ -57,9 +58,16 @@ public class Server implements Runnable {
                 // informamos al resto de usuarios
                 else if (message.startsWith("iam:")) {
                     String name = message.substring(4);
+                    System.out.println(user.getName() + "cambió su nombre por: " + name);
                     message = "[" + user.getName() + " ahora se llama " + name + "]";
                     sendMessageToOtherUsers(message, user);
                     user.setName(name);
+                    message = "[Cambiaste tu nombre a, " + name + "]";
+                    DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes(),0,
+                            message.length(),
+                            remoteInetAddress,
+                            remotePort);
+                    datagramSocket.send(outputDatagramPacket);
                 }
                 // Si no, simplemente enviamos el mensaje
                 else {
@@ -83,7 +91,7 @@ public class Server implements Runnable {
         return null;
     }
 
-    public void sendMessageToOtherUsers(String message, User user) throws Exception {
+    public void sendMessageToOtherUsers(String message, User user) throws Exception { // CAMBIAR POR EXCEPCION MAS CONCRETA
         byte[] messageBytes = message.getBytes();
         for (User otherUser : users) {
             if (otherUser != user) {

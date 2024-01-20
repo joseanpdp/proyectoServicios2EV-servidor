@@ -5,10 +5,11 @@ import java.net.*;
 
 public class Client {
 
+    private HelloController controller = new HelloController();
     final static int LOCAL_PORT  = 6010;
     final static int REMOTE_PORT = 5010;
 
-    public static void main(String args[]) throws Exception {
+    public static void main(String args[]) throws Exception { // CAMBIAR POR UNA EXCEPCION MAS CONCRETA
         /*
         InetAddress remoteInetAddress = InetAddress.getByName(args[0]);
         new Client(LOCAL_PORT, remoteInetAddress, REMOTE_PORT);
@@ -39,23 +40,15 @@ public class Client {
 
         receiverThread.start();
         senderThread.start();
-/*
-        Thread receiverThread   = new Thread(new Receiver(this));
-        Runnable senderRunnable = new Sender(this);
-
-        receiverThread.start();
-        senderRunnable.run();
-*/
 
     }
 
     public void alfa(String message) {
-        /* Client START */ System.out.println( "                       " + /* Client END*/ message);
+        controller.actualizarLabel(message);
     }
 
     public String beta() throws IOException {
-        String sentence = /* Client START*/ inputFromUser.readLine();
-        return sentence;
+        return controller.obtenerTextoDesdeInterfaz();
     }
 
 }
