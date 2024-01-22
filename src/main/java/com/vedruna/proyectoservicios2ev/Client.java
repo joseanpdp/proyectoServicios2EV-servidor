@@ -5,7 +5,7 @@ import java.net.*;
 
 public class Client {
 
-    private HelloController controller = new HelloController();
+    private ChatController controller = new ChatController();
     final static int LOCAL_PORT  = 6010;
     final static int REMOTE_PORT = 5010;
 

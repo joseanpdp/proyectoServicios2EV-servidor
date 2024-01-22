@@ -5,12 +5,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 
-import java.net.InetAddress;
-
-public class HelloController {
-    Client client = new Client(Client.LOCAL_PORT, InetAddress.getByName("localhost"), Client.REMOTE_PORT);
+public class ChatController {
+    private Client client;
     @FXML
     private TextField textField;
 
@@ -20,9 +17,11 @@ public class HelloController {
     @FXML
     private VBox innerVBox;
 
-    public HelloController() throws Exception {
-    }
+    public ChatController() throws Exception {}
 
+    public void setClient(Client client) throws Exception {
+        this.client = client;
+    }
     @FXML
     protected void onSendMessage() {
         String texto = textField.getText();
