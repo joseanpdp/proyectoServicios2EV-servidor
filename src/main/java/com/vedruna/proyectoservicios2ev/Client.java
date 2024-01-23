@@ -5,11 +5,10 @@ import java.net.*;
 
 public class Client {
 
-    private ChatController controller = new ChatController();
     final static int LOCAL_PORT  = 6010;
     final static int REMOTE_PORT = 5010;
 
-    public static void main(String args[]) throws Exception { // CAMBIAR POR UNA EXCEPCION MAS CONCRETA
+    public static void main(String args[]) throws Exception {
         /*
         InetAddress remoteInetAddress = InetAddress.getByName(args[0]);
         new Client(LOCAL_PORT, remoteInetAddress, REMOTE_PORT);
@@ -22,6 +21,7 @@ public class Client {
 
     ////////////////////////////////////////////////////////////////////////////////////
 
+    App app;
     BufferedReader inputFromUser;
     DatagramSocket datagramSocket;
 
@@ -36,20 +36,22 @@ public class Client {
         datagramSocket = new DatagramSocket(localPort);
 
         Thread receiverThread = new Thread(new Receiver(this));
-        Thread senderThread = new Thread(new Sender(this));
 
         receiverThread.start();
-        senderThread.start();
-
     }
 
-    public void alfa(String message) {
-        controller.actualizarLabel(message);
+    public void setApp(App app) {
+        this.app = app;
     }
 
-    public String beta() throws IOException {
-        return controller.obtenerTextoDesdeInterfaz();
+    public void sendMessage(String sentence) throws IOException {
+        byte[] outputBuffer = sentence.getBytes();
+        DatagramPacket outputDatagramPacket = new DatagramPacket( outputBuffer, outputBuffer.length
+                , remoteInetAddress
+                , remotePort);
+        datagramSocket.send(outputDatagramPacket);
     }
+
 
 }
 
@@ -69,33 +71,7 @@ class Receiver implements Runnable {
                 DatagramPacket inputDatagramPacket = new DatagramPacket(inputBuffer, inputBuffer.length);
                 client.datagramSocket.receive(inputDatagramPacket);
                 String message = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength());
-                client.alfa(message);
-            }
-        }
-        catch (Exception ex) {
-            System.out.println(ex);
-        }
-    }
-}
-
-class Sender implements Runnable {
-
-    Client client;
-
-    public Sender(Client client) {
-        this.client = client;
-    }
-
-    @Override
-    public void run() {
-        try {
-            while (true) {
-
-                byte[] outputBuffer = client.beta().getBytes();
-                DatagramPacket outputDatagramPacket = new DatagramPacket( outputBuffer, outputBuffer.length
-                        , client.remoteInetAddress
-                        , client.remotePort);
-                client.datagramSocket.send(outputDatagramPacket);
+                client.app.chatController.showMessage(message);
             }
         }
         catch (Exception ex) {

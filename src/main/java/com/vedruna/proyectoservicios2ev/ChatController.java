@@ -7,6 +7,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 
 public class ChatController {
+
+    App app;
     private Client client;
     @FXML
     private TextField textField;
@@ -32,6 +34,13 @@ public class ChatController {
         }
     }
 
+    public void showMessage(String message) {
+        if (!message.equals("")) {
+            Label nuevoLabel = new Label(message);
+            innerVBox.getChildren().add(nuevoLabel);
+        }
+    }
+
     public String obtenerTextoDesdeInterfaz() {
         // Obtener el texto desde el TextField en la interfaz gráfica
         return textField.getText();
@@ -42,4 +51,9 @@ public class ChatController {
         textField.setText("");
         innerVBox.getChildren().add(nuevoLabel);
     }
+
+    public void setApp(App app) {
+        this.app = app;
+    }
+
 }

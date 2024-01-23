@@ -26,21 +26,23 @@ public class App extends Application {
 
         FXMLLoader fxmlLoader;
 
+        /*
         fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
         loginView = fxmlLoader.load();
         loginController = fxmlLoader.getController();
 
+         */
         fxmlLoader = new FXMLLoader(getClass().getResource("chat-view.fxml"));
         chatView = fxmlLoader.load();
         chatController = fxmlLoader.getController();
 
-        loginController.setApp(this);
+        //loginController.setApp(this);
         chatController.setApp(this);
 
         Client client = new Client(Client.LOCAL_PORT, InetAddress.getByName("localhost"), Client.REMOTE_PORT);
         chatController.setClient(client);
 
-        scene = new Scene(loginView, 350, 500);
+        scene = new Scene(chatView, 350, 500);
         stage.setTitle("CHAT");
         stage.setScene(scene);
         stage.show();
