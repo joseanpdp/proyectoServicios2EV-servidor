@@ -4,13 +4,18 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class App extends Application {
 
+    Stage stage;
+
     Scene scene;
+
 
     Parent loginView;
 
@@ -21,31 +26,43 @@ public class App extends Application {
 
     Client client;
 
+    String username;
+
+    String localPort;
+
+    String ip;
+
+
     @Override
     public void start(Stage stage) throws Exception {
 
+        this.stage = stage;
+
         FXMLLoader fxmlLoader;
 
-        /*
+
         fxmlLoader = new FXMLLoader(getClass().getResource("login-view.fxml"));
         loginView = fxmlLoader.load();
         loginController = fxmlLoader.getController();
 
-         */
         fxmlLoader = new FXMLLoader(getClass().getResource("chat-view.fxml"));
         chatView = fxmlLoader.load();
         chatController = fxmlLoader.getController();
 
-        //loginController.setApp(this);
+        loginController.setApp(this);
         chatController.setApp(this);
 
-        Client client = new Client(Client.LOCAL_PORT, InetAddress.getByName("localhost"), Client.REMOTE_PORT);
-        chatController.setClient(client);
+        this.scene = new Scene(loginView, 350, 500);
+        this.stage.setScene(scene);
+        this.stage.show();
+    }
 
-        scene = new Scene(chatView, 350, 500);
-        stage.setTitle("CHAT");
-        stage.setScene(scene);
-        stage.show();
+    public void login() throws Exception {
+        stage.setTitle("ChatUDP: " + username + "@" + localPort);
+        client = new Client(Integer.parseInt(localPort), InetAddress.getByName(ip), Client.REMOTE_PORT);
+        client.setApp(this);
+        client.login();
+        client.start();
     }
     public static void main(String[] args) {
         Application.launch(App.class);

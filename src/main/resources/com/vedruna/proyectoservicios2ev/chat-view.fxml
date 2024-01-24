@@ -6,16 +6,16 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-      prefHeight="600.0" prefWidth="350.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-      xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoservicios2ev.ChatController">
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoservicios2ev.ChatController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
-   <VBox fx:id="innerVBox" alignment="BOTTOM_LEFT" prefHeight="491.0" prefWidth="310.0" />
+   <ScrollPane fx:id="scrollPane" prefHeight="491.0" prefWidth="310.0">
+       <TextFlow fx:id="textFlow" prefHeight="200.0" prefWidth="200.0" />
+   </ScrollPane>
    <HBox alignment="CENTER" prefHeight="48.0" prefWidth="326.0">
       <children>
-         <TextField fx:id="textField" maxWidth="-Infinity" minWidth="250.0">
+         <TextField fx:id="textField" onKeyPressed="#onKeyPressed" maxWidth="-Infinity" minWidth="250.0">
             <opaqueInsets>
                <Insets />
             </opaqueInsets>
@@ -36,4 +36,5 @@
             </graphic></Button>
       </children>
    </HBox>
+
 </VBox>

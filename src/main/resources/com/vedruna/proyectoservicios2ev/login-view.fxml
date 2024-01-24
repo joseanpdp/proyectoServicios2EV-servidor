@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.vedruna.proyectoservicios2ev.LoginController"
-            prefHeight="400.0" prefWidth="600.0">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoservicios2ev.LoginController">
 
-</AnchorPane>
+    <Text text="ChatUDP" textAlignment="CENTER">
+        <font>
+            <Font size="30.0" />
+        </font>
+        <VBox.margin>
+            <Insets bottom="20.0" />
+        </VBox.margin>
+    </Text>
+   <Label text="IP del servidor" />
+
+    <TextField fx:id="textFieldIp" onAction="#onActionTextFieldIp" maxHeight="50.0" maxWidth="250.0" minHeight="20.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" text="127.0.0.1">
+        <VBox.margin>
+            <Insets bottom="10.0" />
+        </VBox.margin>
+        <font>
+            <Font size="20.0" />
+        </font>
+    </TextField>
+    <Label text="Puerto local" />
+
+    <TextField fx:id="textFieldLocalPort" onAction="#onActionTextFieldLocalPort" maxHeight="50.0" maxWidth="250.0" minHeight="20.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" text="6010">
+        <VBox.margin>
+            <Insets bottom="10.0" />
+        </VBox.margin>
+        <font>
+            <Font size="20.0" />
+        </font>
+    </TextField>
+   <Label text="Nombre de usuario" />
+
+    <TextField fx:id="textFieldUsername" onAction="#onActionTextFieldusername" maxHeight="50.0" maxWidth="250.0" minHeight="20.0" minWidth="200.0" prefHeight="35.0" prefWidth="200.0" text="Usuario">
+        <VBox.margin>
+            <Insets bottom="10.0" />
+        </VBox.margin>
+        <font>
+            <Font size="20.0" />
+        </font>
+    </TextField>
+
+
+    <Button fx:id="buttonLogin" maxWidth="150.0" onAction="#onLogin" prefHeight="30.0" text="Entrar">
+        <font>
+            <Font size="15.0" />
+        </font>
+        <VBox.margin>
+            <Insets top="20.0" />
+        </VBox.margin></Button>
+
+
+    <Label fx:id="accessError" alignment="CENTER" contentDisplay="CENTER" maxWidth="350.0" prefHeight="40.0" textAlignment="CENTER" textFill="RED">
+        <VBox.margin>
+            <Insets top="20.0" />
+        </VBox.margin>
+        <font>
+            <Font size="15.0" />
+        </font></Label>
+
+</VBox>

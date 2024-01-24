@@ -1,56 +1,70 @@
 package com.vedruna.proyectoservicios2ev;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.VBox;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 public class ChatController {
 
     App app;
-    private Client client;
     @FXML
     private TextField textField;
 
     @FXML
-    private Button sendButton;
+    private ScrollPane scrollPane;
 
     @FXML
-    private VBox innerVBox;
+    private TextFlow textFlow;
+
+    @FXML
+    private Button sendButton;
 
     public ChatController() throws Exception {}
 
-    public void setClient(Client client) throws Exception {
-        this.client = client;
-    }
     @FXML
     protected void onSendMessage() {
-        String texto = textField.getText();
-        if (!texto.equals("")) {
-            Label nuevoLabel = new Label(texto);
-            textField.setText("");
-            innerVBox.getChildren().add(nuevoLabel);
-        }
-    }
-
-    public void showMessage(String message) {
+        String message = textField.getText().trim();
         if (!message.equals("")) {
-            Label nuevoLabel = new Label(message);
-            innerVBox.getChildren().add(nuevoLabel);
+            showUserMessage(Color.BLUE, app.username, message);
+            textField.setText("");
+            app.client.sendMessage(message);
         }
     }
 
-    public String obtenerTextoDesdeInterfaz() {
-        // Obtener el texto desde el TextField en la interfaz gráfica
-        return textField.getText();
+    @FXML
+    protected void onKeyPressed(KeyEvent keyEvent) {
+        if( keyEvent.getCode() == KeyCode.ENTER ) {
+            onSendMessage();
+        }
     }
 
-    public void actualizarLabel(String message) {
-        Label nuevoLabel = new Label(message);
-        textField.setText("");
-        innerVBox.getChildren().add(nuevoLabel);
+    public void showUserMessage(Color color, String username, String message) {
+        Platform.runLater(() -> {
+            Text text;
+            text = new Text("\n" + username + ": ");
+            text.setFill(color);
+            textFlow.getChildren().add(text);
+            text = new Text(message);
+            textFlow.getChildren().add(text);
+            scrollPane.setVvalue(scrollPane.getVmax());
+        });
     }
+
+    public void showServerInfo(String info) {
+        Text text;
+        text = new Text(info + "\n\n");
+        textFlow.getChildren().add(text);
+        scrollPane.setVvalue(scrollPane.getVmax());
+    }
+
+
 
     public void setApp(App app) {
         this.app = app;

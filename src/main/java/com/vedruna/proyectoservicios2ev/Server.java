@@ -36,42 +36,24 @@ public class Server implements Runnable {
                 // Capturamos la dirección y el puerto del emisor
                 InetAddress remoteInetAddress = inputDatagramPacket.getAddress();
                 int remotePort = inputDatagramPacket.getPort();
-                // Extraemos el mensaje
-                String message = new String(inputDatagramPacket.getData(),0,inputDatagramPacket.getLength());
-
                 // Comprobamos si la direccion y el puerto están ya registrados
                 User user = searchUser(remoteInetAddress, remotePort);
                 // Si no lo están, los registramos
                 if (user == null) {
-                    user = new User(message, remoteInetAddress, remotePort);
+                    String username = new String(inputDatagramPacket.getData(),0,inputDatagramPacket.getLength(), "UTF-8");
+                    user = new User(username, remoteInetAddress, remotePort);
                     users.add(user);
                     // PETICION DEL NOMBRE DE USUARIO PARA EVITAR CONFUSIONES
-                    System.out.println("Se añadió el usuario: " + message);
-                    message = "[El servidor te da la bienvenida, " + message + "]";
-                    DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes(),
-                            message.length(),
+                    System.out.println("Se añadió el usuario: " + username);
+                    String info = "[El servidor te da la bienvenida, " + username + "]";
+                    DatagramPacket outputDatagramPacket = new DatagramPacket(info.getBytes("UTF-8"),
+                            info.length(),
                             remoteInetAddress,
                             remotePort);
                     datagramSocket.send(outputDatagramPacket);
                 }
-                // Si están y el mensaje comienza por iam: cambiamos el nombre del usuario e
-                // informamos al resto de usuarios
-                else if (message.startsWith("iam:")) {
-                    String name = message.substring(4);
-                    System.out.println(user.getName() + "cambió su nombre por: " + name);
-                    message = "[" + user.getName() + " ahora se llama " + name + "]";
-                    sendMessageToOtherUsers(message, user);
-                    user.setName(name);
-                    message = "[Cambiaste tu nombre a, " + name + "]";
-                    DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes(),0,
-                            message.length(),
-                            remoteInetAddress,
-                            remotePort);
-                    datagramSocket.send(outputDatagramPacket);
-                }
-                // Si no, simplemente enviamos el mensaje
                 else {
-                    message = user.getName() + ": " + message;
+                    String message = new String(inputDatagramPacket.getData(),0,inputDatagramPacket.getLength(), "UTF-8");
                     sendMessageToOtherUsers(message, user);
                 }
             }
@@ -92,7 +74,7 @@ public class Server implements Runnable {
     }
 
     public void sendMessageToOtherUsers(String message, User user) throws Exception { // CAMBIAR POR EXCEPCION MAS CONCRETA
-        byte[] messageBytes = message.getBytes();
+        byte[] messageBytes = message.getBytes("UTF-8");
         for (User otherUser : users) {
             if (otherUser != user) {
                 DatagramPacket outputDatagramPacket = new DatagramPacket(messageBytes,

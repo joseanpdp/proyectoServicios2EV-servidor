@@ -7,37 +7,43 @@ import javafx.scene.control.TextField;
 
 public class LoginController {
     @FXML
-    TextField textFieldUser;
+    TextField textFieldIp;
 
     @FXML
-    TextField textFieldPassword;
+    TextField textFieldLocalPort;
+
+    @FXML
+    TextField textFieldUsername;
+
 
     @FXML
     Button buttonLogin;
 
-    @FXML
-    Label accessError;
-
     App app;
+
+
 
     void setApp(App app) {
         this.app = app;
     }
 
-    public void onTextFieldUser() {
-        textFieldPassword.requestFocus();
+    public void onActionTextFieldIp() {
+        textFieldLocalPort.requestFocus();
+    }
+    public void onActionTextFieldLocalPort() {
+        textFieldUsername.requestFocus();
     }
 
-    public void onTextFieldPassword() {
+    public void onActionTextFieldusername() {
         buttonLogin.requestFocus();
     }
 
-    public void onLogin() {
-        // Logica de identificaciñon ausente
+    @FXML
+    public void onLogin() throws Exception {
+        app.ip = textFieldIp.getText();
+        app.localPort = textFieldLocalPort.getText();
+        app.username = textFieldUsername.getText();
         this.app.scene.setRoot(app.chatView);
-        accessError.setText("");
-
-        textFieldUser.setText("");
-        textFieldPassword.setText("");
+        app.login();
     }
 }
