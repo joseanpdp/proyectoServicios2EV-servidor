@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="BOTTOM_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="350.0" spacing="20.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.vedruna.proyectoServicios2ev.client.ChatController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <ScrollPane fx:id="scrollPane" hbarPolicy="NEVER" prefHeight="491.0" prefWidth="310.0">
+       <TextFlow fx:id="textFlow" prefHeight="200.0" prefWidth="292.0" />
+   </ScrollPane>
+   <HBox alignment="CENTER" prefHeight="48.0" prefWidth="326.0">
+      <children>
+         <TextField fx:id="textField" maxWidth="-Infinity" minWidth="202.0" onKeyPressed="#onKeyPressedTextField" prefHeight="24.0" prefWidth="202.0">
+            <opaqueInsets>
+               <Insets />
+            </opaqueInsets>
+            <HBox.margin>
+               <Insets right="10.0" />
+            </HBox.margin>
+         </TextField>
+          <Button fx:id="sendButton" onAction="#onActionSendButton" text="Enviar" textAlignment="CENTER" />
+      </children>
+   </HBox>
+
+</VBox>
