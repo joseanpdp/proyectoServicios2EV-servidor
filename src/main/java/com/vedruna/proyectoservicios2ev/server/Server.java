@@ -1,4 +1,4 @@
-package com.vedruna.proyectoservicios2ev;
+package com.vedruna.proyectoservicios2ev.server;
 
 import java.net.*;
 import java.util.*;

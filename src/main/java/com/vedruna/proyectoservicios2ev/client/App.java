@@ -1,14 +1,12 @@
-package com.vedruna.proyectoservicios2ev;
+package com.vedruna.proyectoservicios2ev.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 public class App extends Application {
 

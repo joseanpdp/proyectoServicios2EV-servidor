@@ -1,8 +1,8 @@
-package com.vedruna.proyectoservicios2ev;
+package com.vedruna.proyectoservicios2ev.client;
 
+import com.vedruna.proyectoservicios2ev.client.App;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 public class LoginController {

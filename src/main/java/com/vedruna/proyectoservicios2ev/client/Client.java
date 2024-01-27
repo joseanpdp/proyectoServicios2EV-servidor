@@ -1,4 +1,4 @@
-package com.vedruna.proyectoservicios2ev;
+package com.vedruna.proyectoservicios2ev.client;
 
 import javafx.scene.paint.Color;
 

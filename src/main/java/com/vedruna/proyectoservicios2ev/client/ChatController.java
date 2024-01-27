@@ -1,5 +1,6 @@
-package com.vedruna.proyectoservicios2ev;
+package com.vedruna.proyectoservicios2ev.client;
 
+import com.vedruna.proyectoservicios2ev.client.App;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
