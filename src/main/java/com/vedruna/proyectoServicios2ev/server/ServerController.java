@@ -1,6 +1,5 @@
 package com.vedruna.proyectoServicios2ev.server;
 
-import com.vedruna.proyectoServicios2ev.client.App;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
@@ -17,13 +16,6 @@ public class ServerController {
     private TextFlow textFlow;
 
 
-    App app;
-
-    public void setApp(App app) {
-        this.app = app;
-        scrollPane.setVvalue(scrollPane.getVmin());
-
-    }
 
     public void showUserMessage(Color color, String username, String message) {//
         Platform.runLater(() -> {
