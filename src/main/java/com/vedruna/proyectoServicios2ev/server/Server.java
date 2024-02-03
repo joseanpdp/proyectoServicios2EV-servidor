@@ -19,9 +19,7 @@ public class Server implements Runnable {
 
     App app;
 
-    final static int LOCAL_PORT = 5010;
-
-    Map<SocketAddress, String> users;
+    Map<InetSocketAddress, String> users;
     DatagramSocket datagramSocket;
     byte[] inputBuffer = new byte[1024];
     DatagramPacket inputDatagramPacket = new DatagramPacket(inputBuffer, inputBuffer.length);
@@ -42,7 +40,7 @@ public class Server implements Runnable {
             while (running) {
                 LOGGER.debug("receiving");
                 datagramSocket.receive(inputDatagramPacket);
-                SocketAddress remoteSocketAddress = inputDatagramPacket.getSocketAddress();
+                InetSocketAddress remoteSocketAddress = (InetSocketAddress) inputDatagramPacket.getSocketAddress();
                 LOGGER.debug("received {}", remoteSocketAddress);
                 if (!users.containsKey(remoteSocketAddress)) {
                     LOGGER.debug("new");
@@ -59,7 +57,7 @@ public class Server implements Runnable {
         }
     }
 
-    private void registerUser(SocketAddress remoteSocketAddress) throws IOException {
+    private void registerUser(InetSocketAddress remoteSocketAddress) throws IOException {
         String inputString = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength(), "UTF-8");
         int firstSeparatorPosition  = inputString.indexOf(">");
         // String tag     = inputString.substring(0, separatorPosition);  Debe ser login
@@ -67,18 +65,26 @@ public class Server implements Runnable {
         String message;
         if (users.values().contains(username)) {
             message = "error>Ya existe un usuario con ese nombre (" + username + ")";
-            this.app.infoController.showInfo(Color.BLUE, username, " error");
+            this.app.infoController.showInfo(Color.RED, Color.RED,
+                                             username,
+                                             remoteSocketAddress.getAddress().toString(),
+                                             remoteSocketAddress.getPort(),
+                                     "error");
         }
         else {
             users.put(remoteSocketAddress, username);
             message = "welcome>Bienvenido, " + username ;
-            this.app.infoController.showInfo(Color.BLUE, username, " se ha conectado");
+            this.app.infoController.showInfo(Color.BLUE, Color.GREEN,
+                                             username,
+                                             remoteSocketAddress.getAddress().toString(),
+                                             remoteSocketAddress.getPort(),
+                                     "se ha conectado");
         }
         DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes("UTF-8"), message.length(), remoteSocketAddress);
         datagramSocket.send(outputDatagramPacket);
     }
 
-    private void processMessage(SocketAddress remoteSocketAddress) throws IOException {
+    private void processMessage(InetSocketAddress remoteSocketAddress) throws IOException {
         String inputString = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength(), "UTF-8");
         int firstSeparatorPosition  = inputString.indexOf(">");
         int secondSeparatorPosition = inputString.indexOf(":");
@@ -101,7 +107,7 @@ public class Server implements Runnable {
 
     void sendToAllUsers(String message) throws IOException {
         byte[] messageBytes = message.getBytes("UTF-8");
-        for (SocketAddress receiverSocketAddress : users.keySet()) {
+        for (InetSocketAddress receiverSocketAddress : users.keySet()) {
             DatagramPacket outputDatagramPacket = new DatagramPacket(messageBytes, messageBytes.length, receiverSocketAddress);
             datagramSocket.send(outputDatagramPacket);
         }

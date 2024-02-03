@@ -17,13 +17,20 @@ public class InfoController {
 
     App app;
 
-    public void showInfo(Color color, String username, String message) {//
+    public void showInfo(Color colorName, Color colorPort, String username, String address, int port, String message) {//
         Platform.runLater(() -> {
             Text text;
-            text = new Text("\n" + username + ": ");
-            text.setFill(color);
+            text = new Text("\n" + username);
+            text.setFill(colorName);
             textFlow.getChildren().add(text);
-            text = new Text(message);
+            text = new Text("(");
+            textFlow.getChildren().add(text);
+            text = new Text(address + ":" + port);
+            text.setFill(colorPort);
+            textFlow.getChildren().add(text);
+            text = new Text("): ");
+            textFlow.getChildren().add(text);
+            text = new Text(message + "\n");
             textFlow.getChildren().add(text);
             scrollPane.applyCss();
             scrollPane.layout();

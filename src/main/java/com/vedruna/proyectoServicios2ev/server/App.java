@@ -1,5 +1,7 @@
 package com.vedruna.proyectoServicios2ev.server;
 
+// SE TIENE QUE HACER LO DEL RELOGGING
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -17,7 +19,7 @@ public class App extends Application {
         LOGGER.debug("After");
     }
 
-    final static int REMOTE_PORT = 5010;
+    final static int LOCAL_PORT = 5010;
 
     Scene scene;
     Parent infoView;
@@ -27,7 +29,7 @@ public class App extends Application {
 
     public App() throws Exception {
         super();
-        server = new Server(REMOTE_PORT, this);
+        server = new Server(LOCAL_PORT, this);
         Thread serverThread = new Thread(server);
         serverThread.start();
     }
@@ -47,7 +49,7 @@ public class App extends Application {
 
         infoController.setApp(this);
 
-        this.scene = new Scene(infoView, 350, 500);
+        this.scene = new Scene(infoView, 800, 500);
         this.stage.setScene(scene);
         this.stage.show();
 
