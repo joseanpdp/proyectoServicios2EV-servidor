@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.net.*;
 import java.util.*;
 
+import javafx.scene.paint.Color;
 import org.apache.logging.log4j.*;
 
 /*
@@ -12,14 +13,11 @@ import org.apache.logging.log4j.*;
                            |        |
 */
 
-public class Server  {
+public class Server implements Runnable {
 
     private static final Logger LOGGER = LogManager.getLogger(Server.class);
 
-    public static void main(String args[]) throws Exception {
-        Server server = new Server(LOCAL_PORT);
-        server.start();
-    }
+    App app;
 
     final static int LOCAL_PORT = 5010;
 
@@ -30,12 +28,15 @@ public class Server  {
 
     boolean running;
 
-    public Server(int localPort) throws Exception {
+    public Server(int localPort, App app) throws Exception {
         users = new HashMap<>();
         datagramSocket = new DatagramSocket(localPort);
         running = true;
+        this.app = app;
     }
-    public void start() {
+
+    @Override
+    public void run() {
         LOGGER.debug("Server::start");
         try {
             while (running) {
@@ -66,10 +67,12 @@ public class Server  {
         String message;
         if (users.values().contains(username)) {
             message = "error>Ya existe un usuario con ese nombre (" + username + ")";
+            this.app.infoController.showInfo(Color.BLUE, username, " error");
         }
         else {
             users.put(remoteSocketAddress, username);
             message = "welcome>Bienvenido, " + username ;
+            this.app.infoController.showInfo(Color.BLUE, username, " se ha conectado");
         }
         DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes("UTF-8"), message.length(), remoteSocketAddress);
         datagramSocket.send(outputDatagramPacket);
@@ -91,6 +94,8 @@ public class Server  {
                     running = false;
                 }
                 break;
+            case "login":
+                LOGGER.debug("Se intenta iniciar sesión");
         }
     }
 

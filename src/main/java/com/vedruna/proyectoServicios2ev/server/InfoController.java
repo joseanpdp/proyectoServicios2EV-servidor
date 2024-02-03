@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
-public class ServerController {
+public class InfoController {
 
     @FXML
     private ScrollPane scrollPane;
@@ -15,9 +15,9 @@ public class ServerController {
     @FXML
     private TextFlow textFlow;
 
+    App app;
 
-
-    public void showUserMessage(Color color, String username, String message) {//
+    public void showInfo(Color color, String username, String message) {//
         Platform.runLater(() -> {
             Text text;
             text = new Text("\n" + username + ": ");
@@ -25,10 +25,14 @@ public class ServerController {
             textFlow.getChildren().add(text);
             text = new Text(message);
             textFlow.getChildren().add(text);
+            scrollPane.applyCss();
+            scrollPane.layout();
             scrollPane.setVvalue(scrollPane.getVmax());
         });
     }
 
 
-
+    public void setApp(App app) {
+        this.app = app;
+    }
 }
