@@ -64,7 +64,7 @@ public class ChatController {
             textFlow.getChildren().add(text);
             text = new Text(message);
             textFlow.getChildren().add(text);
-            scrollPane.setVvalue(scrollPane.getVmax());
+            scroll();
         });
     }
 
@@ -73,8 +73,14 @@ public class ChatController {
             Text text;
             text = new Text("\n\n" + info + "\n\n");
             textFlow.getChildren().add(text);
-            scrollPane.setVvalue(scrollPane.getVmax());
+            scroll();
         });
+    }
+
+    private void scroll() {
+        scrollPane.applyCss();
+        scrollPane.layout();
+        scrollPane.setVvalue(scrollPane.getVmax());
     }
 
     public void stop() {
