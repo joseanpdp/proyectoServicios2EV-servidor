@@ -57,6 +57,7 @@ public class App extends Application {
         chatController.setApp(this);
 
         this.scene = new Scene(loginView, 350, 500);
+        scene.getStylesheets().add(App.class.getResource("/com/vedruna/proyectoServicios2ev/Styles.css").toExternalForm());
         this.stage.setScene(scene);
         this.stage.show();
 

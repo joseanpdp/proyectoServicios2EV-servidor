@@ -1,0 +1,24 @@
+VBox {
+    -fx-background-color: linear-gradient(to bottom, #add8e6, #87ceeb, #5ab7db);
+}
+
+Button {
+    -fx-font-size: 15.0;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: #209cf4;
+    -fx-border-color: #005c99;
+    -fx-border-width: 2px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+Button:hover {
+    -fx-background-color: #17639e !important;
+}
+
+Label {
+    -fx-font-weight: bold;
+    -fx-text-fill: black;
+}
+
