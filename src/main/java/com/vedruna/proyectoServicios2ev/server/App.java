@@ -1,7 +1,5 @@
 package com.vedruna.proyectoServicios2ev.server;
 
-// SE TIENE QUE HACER LO DEL RELOGGING
-
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
