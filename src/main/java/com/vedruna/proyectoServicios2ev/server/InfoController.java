@@ -22,7 +22,6 @@ public class InfoController {
     /** Instancia de la aplicación principal. */
     App app;
 
-<<<<<<< HEAD
     /**
      * Muestra información en la interfaz gráfica de manera asíncrona.
      *
@@ -34,9 +33,6 @@ public class InfoController {
      * @param message Mensaje a mostrar.
      */
     public void showInfo(Color colorName, Color colorPort, String username, String address, int port, String message) {
-=======
-    public void showInfo(Color colorName, Color colorPort, String username, String address, int port, String message) {//
->>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
         Platform.runLater(() -> {
             Text text;
             text = new Text("\n" + username);
