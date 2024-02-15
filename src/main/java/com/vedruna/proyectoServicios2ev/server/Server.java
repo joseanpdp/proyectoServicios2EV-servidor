@@ -7,6 +7,17 @@ import javafx.scene.paint.Color;
 import org.apache.logging.log4j.*;
 
 /*
+<<<<<<< HEAD
+=======
+
+Al servidor le llega:
+                        tag>payload
+El servidor emite (el username lo obtiene del map):
+                        tag>username:payload
+
+
+*/
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
 
 Al servidor le llega:
                         tag>payload
@@ -27,10 +38,14 @@ public class Server implements Runnable {
     private static final Logger LOGGER = LogManager.getLogger(Server.class);
 
 
+<<<<<<< HEAD
     /** Mapa que asocia direcciones de socket con nombres de usuario. */
     Map<InetSocketAddress, String> users;
 
     /** Socket de datagrama para la comunicación del servidor. */
+=======
+    Map<InetSocketAddress, String> users;
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
     DatagramSocket datagramSocket;
 
     /** Búfer de entrada para recibir datos. */
@@ -71,7 +86,12 @@ public class Server implements Runnable {
                 String username = users.get(remoteSocketAddress);
                 if (username != null) {
                     processMessage(remoteSocketAddress, username);
+<<<<<<< HEAD
                 } else {
+=======
+                }
+                else {
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
                     LOGGER.debug("new");
                     registerUser(remoteSocketAddress);
                     LOGGER.debug("registered");
@@ -82,12 +102,15 @@ public class Server implements Runnable {
         }
     }
 
+<<<<<<< HEAD
     /**
      * Registra un nuevo usuario en el servidor.
      *
      * @param remoteSocketAddress Dirección del nuevo usuario.
      * @throws IOException Si hay un error al enviar mensajes.
      */
+=======
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
     private void registerUser(InetSocketAddress remoteSocketAddress) throws IOException {
         String inputString = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength(), "UTF-8");
         int firstSeparatorPosition = inputString.indexOf(">");
@@ -96,6 +119,7 @@ public class Server implements Runnable {
         if (users.values().contains(username)) {
             message = "error>Ya existe un usuario con ese nombre (" + username + ")";
             this.app.infoController.showInfo(Color.RED, Color.RED,
+<<<<<<< HEAD
                     username,
                     remoteSocketAddress.getAddress().toString(),
                     remoteSocketAddress.getPort(),
@@ -108,11 +132,27 @@ public class Server implements Runnable {
                     remoteSocketAddress.getAddress().toString(),
                     remoteSocketAddress.getPort(),
                     "se ha conectado");
+=======
+                                             username,
+                                             remoteSocketAddress.getAddress().toString(),
+                                             remoteSocketAddress.getPort(),
+                                     "error");
+        }
+        else {
+            users.put(remoteSocketAddress, username);
+            message = "welcome>Bienvenido, " + username ;
+            this.app.infoController.showInfo(Color.BLUE, Color.GREEN,
+                                             username,
+                                             remoteSocketAddress.getAddress().toString(),
+                                             remoteSocketAddress.getPort(),
+                                     "se ha conectado");
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
         }
         DatagramPacket outputDatagramPacket = new DatagramPacket(message.getBytes("UTF-8"), message.length(), remoteSocketAddress);
         datagramSocket.send(outputDatagramPacket);
     }
 
+<<<<<<< HEAD
     /**
      * Procesa un mensaje recibido por el servidor.
      *
@@ -124,6 +164,12 @@ public class Server implements Runnable {
         String inputString = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength(), "UTF-8");
         int separatorPosition = inputString.indexOf(">");
         String tag = inputString.substring(0, separatorPosition);
+=======
+    private void processMessage(InetSocketAddress remoteSocketAddress, String username) throws IOException {
+        String inputString = new String(inputDatagramPacket.getData(), 0, inputDatagramPacket.getLength(), "UTF-8");
+        int separatorPosition  = inputString.indexOf(">");
+        String tag     = inputString.substring(0, separatorPosition);
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
         String payload = inputString.substring(separatorPosition + 1);
         switch (tag) {
             case "chatting":
@@ -144,7 +190,12 @@ public class Server implements Runnable {
                             remoteSocketAddress.getAddress().toString(),
                             remoteSocketAddress.getPort(),
                             "se ha reconectado");
+<<<<<<< HEAD
                 } else {
+=======
+                }
+                else {
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
                     message = "error>Intenta reconectar con un nombre diferente (" + username + "/" + payload + ")";
                     this.app.infoController.showInfo(Color.RED, Color.RED,
                             username,

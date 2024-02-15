@@ -24,7 +24,10 @@ public class App extends Application {
         LOGGER.debug("After");
     }
 
+<<<<<<< HEAD
     /** Puerto local para la comunicación del servidor. */
+=======
+>>>>>>> 2b8701596ff9c9dfdc8926161b5c6ebcc2eb4ba8
     final static int LOCAL_PORT = 5010;
 
     /** Escena de la interfaz gráfica. */
